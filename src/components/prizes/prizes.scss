@@ -1,0 +1,229 @@
+// login.scss fayliga qo'shing
+
+.prizes-section {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #4a90e2;
+  position: relative;
+  overflow: hidden;
+
+  .prizes-title {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    
+    &:before {
+      content: "";
+      font-size: 1.5rem;
+    }
+  }
+  
+  .prizes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    // justify-content: center;
+    // align-items: center;
+    
+    .prize-card {
+      background: #f8f9fa;
+      border-radius: 6px;
+      padding: 1rem;
+      text-align: center;
+      border: 1px solid #e9ecef;
+      transition: all 0.3s ease;
+      position: relative;
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-color: #4a90e2;
+      }
+      
+      // O'rinlar uchun ranglar
+      &:nth-child(1) {
+        border-top: 3px solid #ffd700; // Oltin
+        .prize-info h4:before {
+          content: "🥇 ";
+        }
+      }
+      
+      &:nth-child(2) {
+        border-top: 3px solid #c0c0c0; // Kumush
+        .prize-info h4:before {
+          content: "🥈 ";
+        }
+      }
+      
+      &:nth-child(3) {
+        border-top: 3px solid #cd7f32; // Bronza
+        .prize-info h4:before {
+          content: "🥉 ";
+        }
+      }
+      
+      .prize-image {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 0.8rem;
+        background: white;
+        border-radius: 8px;
+        padding: 8px;
+        border: 1px solid #e9ecef;
+        
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+        
+        // Agar rasm bo'lmasa, placeholder
+        &:empty:before {
+          content: "🎁";
+          font-size: 2rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+        }
+      }
+      
+      .prize-info {
+        h4 {
+          margin: 0 0 0.5rem 0;
+          font-size: 1rem;
+          font-weight: 600;
+          color: #2c3e50;
+        }
+        
+        p {
+          margin: 0;
+          font-size: 0.85rem;
+          color: #495057;
+          line-height: 1.3;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+  
+  // Dekorativ element
+  &:before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, #4a90e2, #7b68ee);
+    opacity: 0.05;
+    border-radius: 50%;
+    z-index: 0;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .prizes-section {
+    margin: 1.5rem 0;
+    padding: 1.2rem;
+    
+    .prizes-title {
+      font-size: 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+    
+    .prizes-grid {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 0.8rem;
+      
+      .prize-card {
+        padding: 0.8rem;
+        
+        .prize-image {
+          width: 80px;
+          height: 80px;
+          margin-bottom: 0.6rem;
+        }
+        
+        .prize-info {
+          h4 {
+            font-size: 0.9rem;
+            margin-bottom: 0.4rem;
+          }
+          
+          p {
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .prizes-section {
+    margin: 1rem 0;
+    padding: 1rem;
+    
+    .prizes-grid {
+      grid-template-columns: 1fr;
+      
+      .prize-card {
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-align: left;
+        
+        .prize-image {
+          margin-bottom: 0;
+          flex-shrink: 0;
+        }
+        
+        .prize-info {
+          flex: 1;
+          
+          h4 {
+            margin-bottom: 0.3rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Form ichidagi joylashtirish uchun qo'shimcha stillar
+.royhatdan-otish {
+  .prizes-section {
+    margin: 1.5rem 0;
+    
+    // Form container ichida bo'lsa
+    .form-container & {
+      margin: 1rem 0 2rem 0;
+    }
+  }
+}
+
+// Tanlangan kategoriya bilan moslashtirish
+.selected-category-banner + .prizes-section {
+  margin-top: -0.5rem;
+  border-radius: 0 0 8px 8px;
+  border-top: none;
+  border-left: 4px solid #4a90e2;
+}
+
+// Yo'nalish tanlanmagan holatda
+.prizes-section:empty {
+  display: none;
+}

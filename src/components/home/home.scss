@@ -1,0 +1,1139 @@
+// Asosiy ranglar
+$primary: #2178d5;
+$primary-light: #4a95e2;
+$primary-glow: rgba(33, 120, 213, 0.3);
+$text: #2c3e50;
+$text-light: #7f8c8d;
+$background: #ffffff;
+$border: #e1e8ed;
+
+// Animatsiya mixinlari
+@mixin animation($name, $duration: 0.6s, $timing: ease) {
+  animation: $name $duration $timing;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+
+  70% {
+    transform: scale(0.9);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  60% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+
+  0%,
+  50% {
+    border-color: transparent;
+  }
+
+  51%,
+  100% {
+    border-color: $primary;
+  }
+}
+
+@keyframes glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 5px $primary-glow;
+  }
+
+  50% {
+    box-shadow: 0 0 20px $primary-glow, 0 0 30px $primary-glow;
+  }
+}
+
+@keyframes clickEffect {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(0.9);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+// Base styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  color: $text;
+  background: $background;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+// Animated Background
+.animated-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+
+  .floating-circle {
+    position: absolute;
+    background: linear-gradient(135deg, #4a90e2, #7b68ee);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    opacity: 0.1;
+
+    &.circle-1 {
+      width: 200px;
+      height: 220px;
+      top: 15%;
+      left: 10%;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    &.circle-2 {
+      width: 150px;
+      height: 170px;
+      top: 60%;
+      right: 10%;
+      animation: float 6s ease-in-out infinite reverse;
+    }
+
+    &.circle-3 {
+      width: 100px;
+      height: 120px;
+      bottom: 20%;
+      left: 20%;
+      animation: float 10s ease-in-out infinite;
+    }
+  }
+}
+
+// Header animations
+.header {
+  padding: 20px 0;
+  border-bottom: 1px solid $border;
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: all 0.8s ease;
+
+  &.slide-down {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: $primary;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+// Main
+.main {
+  min-height: 80vh;
+  padding: 60px 0;
+}
+
+// Hero animations
+.hero {
+  text-align: center;
+  margin-bottom: 80px;
+  opacity: 0;
+
+  &.fade-in {
+    @include animation(fadeIn, 1s);
+    opacity: 1;
+  }
+
+  h1 {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: $text;
+    overflow: hidden;
+    border-right: 3px solid $primary;
+    white-space: nowrap;
+    margin: 0 auto 16px;
+    width: 0;
+
+    &.typing-animation {
+      animation:
+        typing 2s steps(20, end) forwards,
+        blink 0.8s infinite;
+    }
+  }
+
+  p {
+    font-size: 20px;
+    color: $text-light;
+    opacity: 0;
+    max-width: 800px;
+    margin: 0 auto 30px;
+    line-height: 1.6;
+
+    &.slide-up {
+      animation: slideUp 0.8s ease 1s forwards;
+    }
+  }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 40px 0;
+    opacity: 0;
+    animation: slideUp 0.8s ease 1.5s forwards;
+
+    .stat {
+      text-align: center;
+
+      .number {
+        display: block;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: $primary;
+        margin-bottom: 5px;
+      }
+
+      .label {
+        font-size: 0.9rem;
+        color: $text-light;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: $primary;
+    border-radius: 50%;
+    margin: 30px auto 0;
+    animation: pulse 2s infinite;
+  }
+}
+
+// Section subtitle
+.section-subtitle {
+  text-align: center;
+  font-size: 1.1rem;
+  color: $text-light;
+  margin-bottom: 50px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0;
+  animation: slideUp 0.8s ease 0.8s forwards;
+}
+
+// Categories animations
+.categories {
+  .section-title {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: $text;
+    opacity: 0;
+
+    &.bounce-in {
+      animation: bounceIn 1s ease 0.5s forwards;
+    }
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 30px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+
+    .card-5 {
+      grid-column: span 2; // Bu card-5 ni 2 column joy egallashiga oladi
+
+      // Kichik ekranlarda normal o'lchamda ko'rsatish
+      @media (max-width: 768px) {
+        grid-column: span 1;
+      }
+    }
+  }
+
+  .card {
+    background: $background;
+    border: 2px solid $border;
+    border-radius: 16px;
+    padding: 40px 30px;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: scale(0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    img {
+      width: 200px;
+      height: 200px;
+      object-fit: contain;
+      margin-bottom: 20px;
+    }
+
+    &.pop-in {
+      animation: popIn 0.6s ease forwards;
+
+      &.card-1 {
+        animation-delay: 0.8s;
+      }
+
+      &.card-2 {
+        animation-delay: 1s;
+      }
+
+      &.card-3 {
+        animation-delay: 1.2s;
+      }
+
+      &.card-4 {
+        animation-delay: 1.4s;
+      }
+    }
+
+    &:hover {
+      border-color: $primary;
+      transform: translateY(-10px) scale(1.02);
+
+      .card-btn {
+        background: $primary;
+        color: white;
+        transform: translateX(5px);
+      }
+
+      .btn-arrow {
+        transform: translateX(5px);
+      }
+
+      .card-glow {
+        opacity: 1;
+      }
+    }
+
+    &.clicked {
+      animation: clickEffect 0.5s ease;
+    }
+
+    .card-icon {
+      font-size: 48px;
+      margin-bottom: 20px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    h3 {
+      font-size: 24px;
+      margin-bottom: 12px;
+      color: $text;
+    }
+
+    p {
+      color: $text-light;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    .card-features {
+      margin: 20px 0;
+
+      .feature {
+        display: block;
+        font-size: 0.85rem;
+        color: $text-light;
+        margin-bottom: 8px;
+        text-align: left;
+        padding-left: 10px;
+      }
+    }
+
+    .card-btn {
+      background: transparent;
+      border: 2px solid $primary;
+      color: $primary;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .btn-arrow {
+        transition: transform 0.3s ease;
+      }
+    }
+
+    .card-glow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, $primary-glow 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+  }
+}
+
+// Why Join Section
+.why-join {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+
+  .section-title {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 50px;
+    color: $text;
+  }
+
+  .benefits {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+    margin-top: 50px;
+  }
+
+  .benefit {
+    text-align: center;
+    padding: 40px 30px;
+    background: $background;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(30px);
+
+    &:nth-child(1) {
+      animation: slideUp 0.6s ease 0.8s forwards;
+    }
+
+    &:nth-child(2) {
+      animation: slideUp 0.6s ease 1s forwards;
+    }
+
+    &:nth-child(3) {
+      animation: slideUp 0.6s ease 1.2s forwards;
+    }
+
+    &:nth-child(4) {
+      animation: slideUp 0.6s ease 1.4s forwards;
+    }
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .benefit-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: $text;
+    }
+
+    p {
+      color: $text-light;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+  }
+}
+
+// CTA Section
+.cta-section {
+  padding: 80px 0;
+  background: linear-gradient(135deg, $primary 0%, $primary-light 100%);
+  color: white;
+  text-align: center;
+
+  h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: slideUp 0.8s ease 0.5s forwards;
+  }
+
+  p {
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.9;
+    opacity: 0;
+    animation: slideUp 0.8s ease 0.7s forwards;
+  }
+
+  .cta-main-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    animation: slideUp 0.8s ease 0.9s forwards;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+// Floating CTA
+.floating-cta {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: $primary;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(33, 120, 213, 0.3);
+  transform: translateY(100px);
+  opacity: 0;
+  z-index: 1000;
+
+  &.float-up {
+    animation: slideUp 0.8s ease 2s forwards, float 3s ease-in-out 3s infinite;
+  }
+
+  .cta-text {
+    font-weight: 600;
+  }
+
+  .pulse-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border: 2px solid $primary;
+    border-radius: 25px;
+    transform: translate(-50%, -50%);
+    animation: pulse 2s infinite;
+    pointer-events: none;
+  }
+}
+
+// Footer animations
+.footer {
+  background: #f8f9fa;
+  padding: 50px 0 20px;
+  border-top: 1px solid $border;
+  opacity: 0;
+  transform: translateY(50px);
+
+  &.fade-up {
+    animation: slideUp 0.8s ease 1.6s forwards;
+  }
+
+  .footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 60px;
+    margin-bottom: 30px;
+    text-align: left;
+
+    .footer-info {
+      p {
+        max-width: 400px;
+        line-height: 1.6;
+        margin-top: 10px;
+        color: $text-light;
+      }
+    }
+
+    .footer-contact {
+      h4 {
+        margin-bottom: 20px;
+        color: $text;
+        font-size: 1.1rem;
+      }
+
+      p {
+        margin-bottom: 10px;
+        color: $text-light;
+      }
+
+      .nmadur {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        a {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          text-decoration: none;
+          color: $text-light;
+
+          &:hover {
+            color: $primary;
+          }
+        }
+      }
+    }
+  }
+
+  .footer-bottom {
+    border-top: 1px solid $border;
+    padding-top: 20px;
+    text-align: center;
+
+    p {
+      color: $text-light;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .hero {
+    h1 {
+      font-size: 36px;
+    }
+
+    p {
+      font-size: 18px;
+    }
+
+    .hero-stats {
+      gap: 20px;
+
+      .stat .number {
+        font-size: 2rem;
+      }
+    }
+  }
+
+  .categories {
+    .section-title {
+      font-size: 28px;
+    }
+
+    .cards {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .card {
+      padding: 30px 20px;
+    }
+  }
+
+  .why-join .benefits {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .benefit {
+    padding: 30px 20px !important;
+  }
+
+  .cta-section {
+    padding: 60px 0;
+
+    h2 {
+      font-size: 1.8rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+
+  .footer-info p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .floating-cta {
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-stats {
+    flex-direction: column;
+    gap: 25px;
+
+    .stat .number {
+      font-size: 1.8rem;
+    }
+  }
+
+  .card-features .feature {
+    font-size: 0.8rem;
+  }
+
+  .cta-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .cta-main-btn {
+    padding: 12px 30px !important;
+    font-size: 1rem !important;
+  }
+
+  .container {
+    padding: 0 15px;
+  }
+}
+
+// Hover effects
+.card:hover .card-features .feature {
+  color: $primary;
+  transition: color 0.3s ease;
+}
+
+// Scroll animatsiyalari uchun
+@keyframes scrollReveal {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s ease;
+
+  &.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Progress bar
+.progress-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: transparent;
+  z-index: 1001;
+
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, $primary, $primary-light);
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+}
+
+// Loading spinner
+.loading-spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1002;
+
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba($primary, 0.3);
+    border-top: 5px solid $primary;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+// Parallax effekt
+.parallax-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+
+  .parallax-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    &.layer-1 {
+      background: radial-gradient(circle at 20% 80%, rgba($primary, 0.1) 0%, transparent 50%);
+      transform: translateZ(-2px) scale(3);
+    }
+
+    &.layer-2 {
+      background: radial-gradient(circle at 80% 20%, rgba($primary-light, 0.05) 0%, transparent 50%);
+      transform: translateZ(-1px) scale(2);
+    }
+  }
+}
+
+// Yangi hover effektlari
+.card {
+  // ... mavjud kodlar ...
+
+  // Yangi hover effektlari
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba($primary, 0.1), transparent);
+    transition: left 0.8s ease;
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
+
+  .card-hover-content {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    background: rgba($background, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 0 0 16px 16px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+
+    .hover-features {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 15px;
+
+      .feature-item {
+        text-align: center;
+
+        .feature-icon {
+          font-size: 1.2rem;
+          margin-bottom: 5px;
+          color: $primary;
+        }
+
+        .feature-text {
+          font-size: 0.8rem;
+          color: $text-light;
+        }
+      }
+    }
+  }
+
+  &:hover .card-hover-content {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Tugmalar uchun yangi effektlar
+.animated-btn {
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+  }
+
+  &:hover::after {
+    width: 300px;
+    height: 300px;
+  }
+
+  .btn-text {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+// Shake animatsiyasi
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+.shake {
+  animation: shake 0.8s ease;
+}
+
+// Text glow effekti
+.text-glow {
+  text-shadow: 0 0 10px $primary-glow, 0 0 20px $primary-glow, 0 0 30px $primary-glow;
+  animation: glow 2s ease-in-out infinite;
+}
+
+// Gradient text
+.gradient-text {
+  background: linear-gradient(135deg, $primary, $primary-light);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// Stagger animatsiyalari
+.stagger-item {
+  opacity: 0;
+  transform: translateY(30px);
+
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      animation: slideUp 0.6s ease #{$i * 0.1}s forwards;
+    }
+  }
+}
+
+// Magnetic tugma effekti
+.magnetic-btn {
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+// Responsive improvements
+@media (max-width: 768px) {
+  .card-hover-content {
+    position: relative !important;
+    opacity: 1 !important;
+    transform: none !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    padding: 15px 0 0 !important;
+  }
+
+  .hover-features {
+    flex-wrap: wrap;
+    gap: 15px;
+
+    .feature-item {
+      flex: 1;
+      min-width: 45%;
+    }
+  }
+}
+
+// Dark mode tayyorgarligi
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #ecf0f1;
+    --text-light: #bdc3c7;
+    --background: #2c3e50;
+    --border: #34495e;
+  }
+}
+
+// Print styles
+@media print {
+
+  .animated-bg,
+  .floating-cta,
+  .progress-container {
+    display: none;
+  }
+
+  .card {
+    break-inside: avoid;
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+  }
+}
