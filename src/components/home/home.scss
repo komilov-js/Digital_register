@@ -1062,3 +1062,21 @@ body {
     width: 300px;
   }
 }
+video{
+  position: relative;
+  z-index: 999;
+}
+
+
+.hamkorlarimiz{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-around;
+  margin: 20px;
+  div{
+    img{
+      width: 150px;
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './home.scss';
-
+import Agent from '../imgs/agent.png'
 // Import qilinadigan rasmlar
 // import Futbol from '../imgs/futbol.png';
 // import Robot from '../imgs/robot.png';
@@ -27,7 +27,7 @@ const HomePage = () => {
   const categories = [
     {
       id: 1,
-      title: 'Online',
+      title: 'Prompt',
       description: 'Onlayn formatdagi ta\'lim va musobaqalar. Istalgan joydan qatnashing',
       icon: <FaGlobe size={40} />,
       color: '#4CAF50'
@@ -67,13 +67,13 @@ const HomePage = () => {
       icon: <FaCode size={40} />,
       color: '#FF9800'
     },
-    {
-      id: 7,
-      title: 'Web Design',
-      description: 'Zamonaviy va chiroyli web dizaynlar yaratish',
-      icon: <FaPalette size={40} />,
-      color: '#2196F3'
-    },
+    // {
+    //   id: 7,
+    //   title: 'Web Design',
+    //   description: 'Zamonaviy va chiroyli web dizaynlar yaratish',
+    //   icon: <FaPalette size={40} />,
+    //   color: '#2196F3'
+    // },
     {
       id: 8,
       title: 'No Coding',
@@ -245,7 +245,7 @@ const HomePage = () => {
       </div>
 
       {/* Daraxtlar - osonroq variant */}
-     {/* <div className="tree-container">
+      {/* <div className="tree-container">
         <div className="winter-tree"><img src="https://static.vecteezy.com/system/resources/previews/050/769/234/non_2x/festive-christmas-tree-on-transparent-background-free-png.png" alt="" /></div>
       </div> */}
 
@@ -317,6 +317,25 @@ const HomePage = () => {
         </div>
       </main>
 
+      <div className='hamkorlarimiz'>
+        <div>
+          <img src="https://online.raqamliavlod.uz/assets/2-BWeCrlYe.png" alt="" />
+        </div>
+        <div>
+          <img src="https://online.raqamliavlod.uz/assets/5-DQP9ezLm.png" alt="" />
+        </div>
+        <div>
+          <img src="https://online.raqamliavlod.uz/assets/6-CiMIBnhI.png" alt="" />
+        </div>
+        <div>
+          <img src="https://online.raqamliavlod.uz/assets/1-DnfeDoqF.png" alt="" />
+        </div>
+        <div>
+          <img src="https://online.raqamliavlod.uz/assets/3-Bs7eWGt2.png" alt="" />
+        </div>
+
+      </div>
+
       {/* Footer with Snow Accumulation */}
       <footer className={`footer ${isVisible ? 'fade-up' : ''}`}>
         {/* Qor to'planishi */}
@@ -380,6 +399,7 @@ const HomePage = () => {
 
       {/* Mouse tracker effekti */}
       <div className="mouse-tracker" id="mouse-tracker"></div>
+
     </div>
   );
 };

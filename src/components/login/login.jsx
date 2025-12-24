@@ -13,8 +13,8 @@ import {
 const categories = [
   {
     id: 1,
-    title: 'Online',
-    value: 'online',
+    title: 'Prompt',
+    value: 'prompt',
     description: 'Onlayn formatdagi ta\'lim va musobaqalar. Istalgan joydan qatnashing',
     icon: <FaGlobe size={40} />,
     color: '#4CAF50'
@@ -97,9 +97,8 @@ const Login = () => {
     'AI': 'ai',
     'Data Analitik': 'data_analytics',
     '.NET': 'dotnet',
-    'Web Design': 'prompt', // Web Design -> Prompt Engineering
     'No Coding': 'no_coding',
-    'Online': 'contest' // Online -> Contest
+    'Prompt': 'prompt' // Online -> Contest
   };
 
   // Robo Futbol uchun maxsus state
