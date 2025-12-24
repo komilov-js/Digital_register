@@ -2,29 +2,105 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import './login.scss';
 import Logo from '../imgs/logo.png';
-
 import regionsData from '../../data/regions';
 import districtsData from '../../data/districts';
-import Prizes from '../prizes/prizes';
+import { Link } from 'react-router-dom';
+import {
+  FaGlobe, FaPython, FaChartBar, FaMicrosoft,
+  FaRobot, FaCode, FaPalette, FaMagic
+} from 'react-icons/fa';
+
+const categories = [
+  {
+    id: 1,
+    title: 'Online',
+    value: 'online',
+    description: 'Onlayn formatdagi ta\'lim va musobaqalar. Istalgan joydan qatnashing',
+    icon: <FaGlobe size={40} />,
+    color: '#4CAF50'
+  },
+  {
+    id: 2,
+    title: 'Python',
+    value: 'python',
+    description: 'Python dasturlash tili orqali amaliy loyihalar va muammolar yechimi',
+    icon: <FaPython size={40} />,
+    color: '#306998'
+  },
+  {
+    id: 3,
+    title: 'Data Analitik',
+    value: 'data_analitik',
+    description: 'Ma\'lumotlarni tahlil qilish, vizualizatsiya va to\'g\'ri xulosa chiqarish',
+    icon: <FaChartBar size={40} />,
+    color: '#FF6B6B'
+  },
+  {
+    id: 4,
+    title: '.NET',
+    value: 'dotnet',
+    description: '.NET platformasida kuchli va ishonchli ilovalar yaratish',
+    icon: <FaMicrosoft size={40} />,
+    color: '#512BD4'
+  },
+  {
+    id: 5,
+    title: 'AI',
+    value: 'ai',
+    description: 'Sun\'iy intellekt, machine learning va zamonaviy texnologiyalar',
+    icon: <FaRobot size={40} />,
+    color: '#9C27B0'
+  },
+  {
+    id: 6,
+    title: 'Vibe Coding',
+    value: 'vibe_coding',
+    description: 'Qiziqarli va erkin uslubda kod yozish, kreativ yondashuv',
+    icon: <FaCode size={40} />,
+    color: '#FF9800'
+  },
+  {
+    id: 7,
+    title: 'Web Design',
+    value: 'web_design',
+    description: 'Zamonaviy va chiroyli web dizaynlar yaratish',
+    icon: <FaPalette size={40} />,
+    color: '#2196F3'
+  },
+  {
+    id: 8,
+    title: 'No Coding',
+    value: 'no_coding',
+    description: 'Kod yozmasdan turib platformalar va servislar yaratish',
+    icon: <FaMagic size={40} />,
+    color: '#00BCD4'
+  }
+];
 
 const Login = () => {
-  const [searchParams] = useSearchParams()
+  const [searchParams] = useSearchParams();
+  const categoryFromURL = searchParams.get('category');
 
   // API tomonidan qabul qilinadigan yo'nalishlar ro'yxati
-  const validDirections = [
-    { value: 'rfutbol', label: 'Robo Football' },
-    { value: 'rsumo', label: 'Robo Sumo' },
-    { value: 'fixtirolar', label: 'Foydali Ixtirolar' },
-    { value: 'contest', label: 'Contest' },
-    { value: 'ai', label: 'AI Day' }
-
-  ];
+  // HomePage bilan moslashtirilgan versiya
 
   // Jinslar ro'yxati
   const genders = [
     { value: 'erkak', label: 'Erkak' },
     { value: 'ayol', label: 'Ayol' }
   ];
+
+  // HomePage'dan kelgan kategoriyalarni API formatiga o'girish
+  const categoryMapping = {
+    'Python': 'python',
+    'Vibe Coding': 'vibe_coding',
+    'AI': 'ai',
+    'Data Analitik': 'data_analytics',
+    '.NET': 'dotnet',
+    'Web Design': 'prompt', // Web Design -> Prompt Engineering
+    'No Coding': 'no_coding',
+    'Online': 'contest' // Online -> Contest
+  };
 
   // Robo Futbol uchun maxsus state
   const [isRoboFootball, setIsRoboFootball] = useState(false);
@@ -62,7 +138,6 @@ const Login = () => {
     gender: ''
   });
 
-  const [categoryImage, setCategoryImage] = useState(null);
   const [selectedRegion, setSelectedRegion] = useState('');
   const [selectedDistrict, setSelectedDistrict] = useState('');
   const [friendRegion, setFriendRegion] = useState('');
@@ -71,11 +146,8 @@ const Login = () => {
   const [message, setMessage] = useState('');
   const [filteredDistricts, setFilteredDistricts] = useState([]);
   const [friendFilteredDistricts, setFriendFilteredDistricts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(false);
-
-  // Yangi state: obuna modalini ko'rsatish
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
-  // Yangi state: obuna holati
   const [subscriptionStatus, setSubscriptionStatus] = useState({
     instagram: false,
     telegram: false
@@ -83,7 +155,6 @@ const Login = () => {
 
   // Komponent yuklanganda modalni ko'rsatish
   useEffect(() => {
-    // Agar foydalanuvchi oldin obuna bo'lgan bo'lsa, modalni ko'rsatmaymiz
     const hasSubscribed = localStorage.getItem('hasSubscribed');
     if (!hasSubscribed) {
       setShowSubscriptionModal(true);
@@ -92,39 +163,26 @@ const Login = () => {
 
   // Tanlangan kategoriyaga qarab direction ni avtomatik to'ldirish
   useEffect(() => {
-    const category = searchParams.get('category')
-    if (category) {
-      const categoryMapping = {
-        'Robo Football': 'rfutbol',
-        'Robo Sumo': 'rsumo',
-        'Foydali Ixtirolar': 'fixtirolar',
-        'Contest': 'contest',
-        'AI Day': 'ai'
-
-      };
+    if (categoryFromURL) {
+      // Kategoriya nomini API tomonidan qabul qilinadigan formatga moslashtirish
+      const directionValue = categoryMapping[categoryFromURL] || categoryFromURL.toLowerCase().replace(/\s+/g, '_');
 
       // Robo Futbol ekanligini tekshirish
-      const isRoboFootballCategory = category === 'Robo Football';
+      const isRoboFootballCategory = directionValue === 'rfutbol';
       setIsRoboFootball(isRoboFootballCategory);
-
-      // Kategoriya nomini API tomonidan qabul qilinadigan formatga moslashtirish
-      const directionValue = categoryMapping[category] || category;
-      setCategoryImage(`/assets/imgs/${directionValue}.png`);
 
       setFormData(prev => ({
         ...prev,
         direction: directionValue
       }));
-      setSelectedCategory(category);
+      setSelectedCategory(categoryFromURL);
     }
-  }, [searchParams]);
+  }, [categoryFromURL]);
 
   // Telefon raqamini formatlash
   const formatPhoneNumber = (phone) => {
-    // Faqat raqamlarni qoldiradi
     const numbers = phone.replace(/\D/g, '');
-    // +998 qo'shish
-    return numbers ? `+998${numbers}` : '';
+    return numbers ? `+998${numbers.slice(0, 9)}` : '';
   };
 
   // Sanani to'g'ri formatga keltirish (YYYY-MM-DD)
@@ -138,21 +196,17 @@ const Login = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    // Telefon raqamini formatlash
     if (name === 'phone_number') {
       setFormData(prev => ({
         ...prev,
         [name]: formatPhoneNumber(value)
       }));
-    }
-    // Sanani formatlash
-    else if (name === 'birth_date') {
+    } else if (name === 'birth_date') {
       setFormData(prev => ({
         ...prev,
         [name]: formatDate(value)
       }));
-    }
-    else {
+    } else {
       setFormData(prev => ({
         ...prev,
         [name]: value
@@ -164,21 +218,17 @@ const Login = () => {
   const handleFriendInputChange = (e) => {
     const { name, value } = e.target;
 
-    // Telefon raqamini formatlash
     if (name === 'phone_number') {
       setFriendData(prev => ({
         ...prev,
         [name]: formatPhoneNumber(value)
       }));
-    }
-    // Sanani formatlash
-    else if (name === 'birth_date') {
+    } else if (name === 'birth_date') {
       setFriendData(prev => ({
         ...prev,
         [name]: formatDate(value)
       }));
-    }
-    else {
+    } else {
       setFriendData(prev => ({
         ...prev,
         [name]: value
@@ -234,11 +284,8 @@ const Login = () => {
 
   // Obuna tugmasini bosganda
   const handleSubscription = () => {
-    // Ikkala platformaga ham obuna bo'lishni tekshiramiz
     if (subscriptionStatus.instagram && subscriptionStatus.telegram) {
-      // LocalStorage'ga saqlaymiz
       localStorage.setItem('hasSubscribed', 'true');
-      // Modalni yopamiz
       setShowSubscriptionModal(false);
     } else {
       setMessage('Iltimos, ikkala platformaga ham obuna bo\'ling!');
@@ -267,13 +314,13 @@ const Login = () => {
     }
 
     // Telefon raqamini tekshirish
-    if (formData.phone_number.length !== 13) { // +998901234567
+    if (formData.phone_number.length !== 13) {
       setMessage('Iltimos, to\'liq telefon raqamini kiriting!');
       return false;
     }
 
     // Direction qiymatini tekshirish
-    const validDirectionValues = validDirections.map(dir => dir.value);
+    const validDirectionValues = categories.map(dir => dir.id.toString());
     if (!validDirectionValues.includes(formData.direction)) {
       setMessage('Iltimos, to\'g\'ri yo\'nalishni tanlang!');
       return false;
@@ -288,7 +335,6 @@ const Login = () => {
         return false;
       }
 
-      // Do'st telefon raqamini tekshirish
       if (friendData.phone_number.length !== 13) {
         setMessage('Iltimos, sherigingizning to\'liq telefon raqamini kiriting!');
         return false;
@@ -298,84 +344,58 @@ const Login = () => {
     return true;
   };
 
-  // Bo'sh friend_data object yaratish
-  const createEmptyFriendData = () => {
-    return {
-      first_name: "",
-      last_name: "",
-      middle_name: "",
-      phone_number: "",
-      telegram_username: "",
-      birth_date: null,
-      email: "",
-      study_place: "",
-      region: "",
-      district: "",
-      about: "",
-      gender: ""
-    };
-  };
-
   // Form yuborish
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage('');
 
-    // Validatsiya
     if (!validateForm()) {
       setLoading(false);
       return;
     }
 
     try {
-      // API endpoint
+      // API endpoint - to'g'rilangan URL
+      const API_URL = 'https://aiday.infinite-co.uz/register/'; // API endpoint to'g'rilandi
+
+      // Region va district ID'larni string qiymatlarga aylantirish
+      const regionName = regionsData.find(r => parseInt(r.id) === parseInt(formData.region))?.name_uz || '';
+      const districtName = districtsData.find(d => parseInt(d.id) === parseInt(formData.district))?.name_uz || '';
+
       let submitData;
 
       if (isRoboFootball) {
         // Robo Futbol uchun - friend_data bilan
+        const friendRegionName = regionsData.find(r => parseInt(r.id) === parseInt(friendData.region))?.name_uz || '';
+        const friendDistrictName = districtsData.find(d => parseInt(d.id) === parseInt(friendData.district))?.name_uz || '';
+
         submitData = {
           ...formData,
-          phone_number: formData.phone_number,
-          birth_date: formData.birth_date,
+          region: regionName,
+          district: districtName,
+          direction: categories.find((value) => value.id === parseInt(formData.direction)).value || formData.direction,
           friend_data: {
             ...friendData,
-            phone_number: friendData.phone_number,
-            birth_date: friendData.birth_date
+            region: friendRegionName,
+            district: friendDistrictName
           }
         };
       } else {
-        // Boshqa yo'nalishlar uchun - BO'SH OBJECT
+        // Boshqa yo'nalishlar uchun - friend_data O'CHIRILDI
         submitData = {
           ...formData,
-          phone_number: formData.phone_number,
-          birth_date: formData.birth_date,
+          region: regionName,
+          district: districtName,
+          direction: categories.find((value) => value.id === parseInt(formData.direction)).value || formData.direction,
         };
+        // friend_data maydoni o'chirildi
+        delete submitData.friend_data;
       }
 
-      submitData.region = regionsData.find(r => parseInt(r.id) === parseInt(submitData.region))?.name_uz || '';
-      if (!submitData.region) {
-        throw new Error('Noto\'g\'ri viloyat tanlandi.');
-      }
-      submitData.district = districtsData.find(d => parseInt(d.id) === parseInt(submitData.district))?.name_uz || '';
-      if (!submitData.district) {
-        throw new Error('Noto\'g\'ri tuman tanlandi.');
-      }
+      console.log('Yuborilayotgan ma\'lumotlar:', submitData);
 
-      if (isRoboFootball) {
-        submitData.friend_data.region = regionsData.find(r => parseInt(r.id) === parseInt(submitData.friend_data.region))?.name_uz || '';
-        if (!submitData.friend_data.region) {
-          throw new Error('Noto\'g\'ri viloyat tanlandi.');
-        }
-        submitData.friend_data.district = districtsData.find(d => parseInt(d.id) === parseInt(submitData.friend_data.district))?.name_uz || '';
-        if (!submitData.friend_data.district) {
-          throw new Error('Noto\'g\'ri tuman tanlandi.');
-        }
-      }
-
-      console.log('Yuborilayotgan ma\'lumotlar:', submitData); // Debug uchun
-
-      const response = await fetch('https://aiday.infinite-co.uz/register/', {
+      const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -422,9 +442,9 @@ const Login = () => {
         setFriendRegion('');
         setFriendDistrict('');
       } else {
-        // Server xatolarini ko'rsatish
         const errorMessage = result.detail ||
-          Object.values(result).flat().join(', ') ||
+          (result.errors ? Object.values(result.errors).flat().join(', ') : '') ||
+          result.message ||
           'Server xatosi';
         throw new Error(errorMessage);
       }
@@ -477,7 +497,6 @@ const Login = () => {
               name="middle_name"
               value={friendData.middle_name}
               onChange={handleFriendInputChange}
-              placeholder="Majburiy "
             />
           </div>
           <div className='form-group'>
@@ -612,20 +631,13 @@ const Login = () => {
 
   // Yo'nalish qiymatini inson o'qiy oladigan formatga o'tkazish
   const getDirectionLabel = (value) => {
-    const directionMap = {
-      'rfutbol': 'Robo Football',
-      'rsumo': 'Robo Sumo',
-      'fixtirolar': 'Foydali Ixtirolar',
-      'contest': 'Contest',
-      'ai': 'AI Day'
-    };
-    return directionMap[value] || value;
+    const direction = categories.find(dir => dir.id === parseInt(value));
+    return direction ? direction.title : value;
   };
 
   return (
     <div className='login'>
       {/* Obuna Modal */}
-
       {showSubscriptionModal && (
         <div className="subscription-modal-overlay">
           <div className="subscription-modal">
@@ -633,7 +645,6 @@ const Login = () => {
               <h2>Obuna Bo'lish Majburiy</h2>
               <p>Ro'yxatdan o'tish uchun quyidagi platformalarga obuna bo'ling</p>
             </div>
-
             <div className="platforms">
               <div className={`platform-card ${subscriptionStatus.instagram ? 'subscribed' : ''}`}>
                 <div className="platform-icon instagram">
@@ -688,27 +699,26 @@ const Login = () => {
       )}
 
       <div className='logo'>
-        <img src={Logo} alt="Logo" />
+        <Link to='/'>
+          <img src={Logo} alt="Logo" />
+        </Link>
       </div>
       <div className='login-container'>
-
         <div className='royhatdan-otish'>
           <div className='header-text'>
             {selectedCategory && (
               <div className="selected-category-banner">
-                <div className="category-info">
-                  <img src={categoryImage} alt={selectedCategory.title} className="category-large-image" />
-                  <div className="category-details">
-                    <h1>Ro'yxatdan o'tish - {selectedCategory.title}</h1>
-                    <p>* - ushbu belgi bilan ajratilgan maydonlarni to'ldirish majburiy</p>
-                    {isRoboFootball && (
-                      <div className="team-notice">
-                        <strong>Eslatma:</strong> Robo Football yo'nalishi uchun 2 kishilik jamoa ro'yxatdan o'tadi
-                      </div>
-                    )}
-                    <div className="direction-info">
-                      <strong>Tanlangan yo'nalish:</strong> {getDirectionLabel(formData.direction)}
+                <div className="category-details">
+
+                  <h1>{categories.find((value) => value.id === parseInt(selectedCategory))?.icon} Ro'yxatdan o'tish - {getDirectionLabel(selectedCategory)}</h1>
+                  <p>* - ushbu belgi bilan ajratilgan maydonlarni to'ldirish majburiy</p>
+                  {isRoboFootball && (
+                    <div className="team-notice">
+                      <strong>Eslatma:</strong> Robo Football yo'nalishi uchun 2 kishilik jamoa ro'yxatdan o'tadi
                     </div>
+                  )}
+                  <div className="direction-info">
+                    <strong>Tanlangan yo'nalish:</strong> {getDirectionLabel(formData.direction)}
                   </div>
                 </div>
               </div>
@@ -724,11 +734,10 @@ const Login = () => {
           </div>
 
           <div className='form-container'>
-            <div className='hexagon'></div>
-
             <form className='registration-form' onSubmit={handleSubmit}>
               {/* 1-ishtirokchi formasi */}
               <div className="participant-section">
+                <h3 className="participant-title">1-ishtirokchi (Siz)</h3>
 
                 <div className='form-row'>
                   <div className='form-group'>
@@ -761,7 +770,6 @@ const Login = () => {
                       name="middle_name"
                       value={formData.middle_name}
                       onChange={handleInputChange}
-                      placeholder="Majburiy"
                     />
                   </div>
                   <div className='form-group'>
@@ -891,9 +899,9 @@ const Login = () => {
                       required
                     >
                       <option value="">Yo'nalishni tanlang</option>
-                      {validDirections.map(dir => (
-                        <option key={dir.value} value={dir.value}>
-                          {dir.label}
+                      {categories.map(dir => (
+                        <option key={dir.id} value={dir.value}>
+                          {dir.title}
                         </option>
                       ))}
                     </select>
@@ -953,22 +961,9 @@ const Login = () => {
             </form>
           </div>
         </div>
-
-        {formData.direction && (
-          <>
-            {/* {getDirectionLabel(formData.direction)} */}
-            <Prizes direction={formData.direction} />
-          </>
-        )}
-        {/* <div className='hamkorlarimiz'>
-          <h3>Hamkorlarimiz</h3>
-          <div className='partners-placeholder'>
-            Hamkorlar logotiplari shu yerda joylashadi
-          </div>
-        </div> */}
       </div>
     </div>
   )
 }
 
-export default Login
+export default Login;
