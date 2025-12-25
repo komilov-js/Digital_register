@@ -96,7 +96,7 @@ const HomePage = () => {
     },
     {
       id: 3,
-      title: 'Data Analitik',
+      title: 'Data Analytics',
       description: 'Ma\'lumotlarni tahlil qilish, vizualizatsiya va to\'g\'ri xulosa chiqarish',
       icon: <FaChartBar size={40} />,
       color: '#FF6B6B'
@@ -329,7 +329,7 @@ const HomePage = () => {
               <span className="snowflake-emoji">❄️</span>
             </h2>
             <p className="section-subtitle">
-              Quyidagi yo'nalishlardan birini tanlang va o'z ko'nikmalaringizni namoyon eting
+              Quyidagi yo'nalishlardan birini tanlang va bilim hamda ko'nikmalaringizni oshiring!
             </p>
 
             <div className="cards">

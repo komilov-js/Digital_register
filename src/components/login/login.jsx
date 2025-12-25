@@ -29,7 +29,7 @@ const categories = [
   },
   {
     id: 3,
-    title: 'Data Analitik',
+    title: 'Data Analytics',
     value: 'data_analitik',
     description: 'Ma\'lumotlarni tahlil qilish, vizualizatsiya va to\'g\'ri xulosa chiqarish',
     icon: <FaChartBar size={40} />,
