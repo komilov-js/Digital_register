@@ -1,12 +1,20 @@
-import React, { useState, useEffect } from 'react';
+// import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './home.scss';
-import Agent from '../imgs/agent.png'
+// import Agent from '../imgs/agent.png'
 // Import qilinadigan rasmlar
 // import Futbol from '../imgs/futbol.png';
 // import Robot from '../imgs/robot.png';
 // import Chiroq from '../imgs/chiroq.png';
 // import Yutuq from '../imgs/yutuq.png';
+import React, { useState, useEffect, useRef } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation, Pagination, EffectFade, Grid } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
+import 'swiper/css/grid';
 import Logo from '../imgs/logo.png';
 // import Day from '../imgs/day.png';
 
@@ -17,11 +25,51 @@ import {
 } from 'react-icons/fa';
 
 const HomePage = () => {
+
+
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [snowflakes, setSnowflakes] = useState([]);
   const [footerSnow, setFooterSnow] = useState([]);
   const navigate = useNavigate();
+
+  const swiperRef = useRef(null);
+
+  const hamkorlar = [
+    {
+      id: 1,
+      logo: "http://online.raqamliavlod.uz:3455/assets/6-CiMIBnhI.png",
+    },
+    {
+      id: 2,
+      logo: "http://online.raqamliavlod.uz:3455/assets/1-DnfeDoqF.png",
+    },
+    {
+      id: 3,
+      logo: "http://online.raqamliavlod.uz:3455/assets/3-Bs7eWGt2.png",
+    },
+    {
+      id: 4,
+      logo: "http://online.raqamliavlod.uz:3455/assets/5-DQP9ezLm.png",
+    },
+    {
+      id: 5,
+      logo: "http://online.raqamliavlod.uz:3455/assets/4-COwvvxYE.svg",
+    },
+    {
+      id: 6,
+      logo: "http://online.raqamliavlod.uz:3455/assets/1-DnfeDoqF.png",
+    },
+    {
+      id: 7,
+      logo: "http://online.raqamliavlod.uz:3455/assets/2-BWeCrlYe.png",
+    },
+    {
+      id: 8,
+      logo: "http://online.raqamliavlod.uz:3455/assets/7-DjeyfpLS.png",
+    }
+  ];
+
 
   // Yo'nalishlar massivi - faqat mavjud iconlarni ishlatamiz
   const categories = [
@@ -317,23 +365,74 @@ const HomePage = () => {
         </div>
       </main>
 
-      <div className='hamkorlarimiz'>
-        <div>
-          <img src="https://online.raqamliavlod.uz/assets/2-BWeCrlYe.png" alt="" />
-        </div>
-        <div>
-          <img src="https://online.raqamliavlod.uz/assets/5-DQP9ezLm.png" alt="" />
-        </div>
-        <div>
-          <img src="https://online.raqamliavlod.uz/assets/6-CiMIBnhI.png" alt="" />
-        </div>
-        <div>
-          <img src="https://online.raqamliavlod.uz/assets/1-DnfeDoqF.png" alt="" />
-        </div>
-        <div>
-          <img src="https://online.raqamliavlod.uz/assets/3-Bs7eWGt2.png" alt="" />
+      <div className="hamkorlar-container">
+        <div className="section-title">
+          <h2>Hamkorlarimiz</h2>
+          <p>Bizning ishonchli hamkorlarimiz bilan tanishing</p>
         </div>
 
+        <div className="swiper-wrapper">
+          <Swiper
+            ref={swiperRef}
+            modules={[Autoplay]}
+            spaceBetween={30}
+            slidesPerView={5}
+            loop={true}
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
+            speed={800}
+            effect={'creative'}
+            creativeEffect={{
+              prev: {
+                shadow: true,
+                translate: ['-120%', 0, -500],
+              },
+              next: {
+                shadow: true,
+                translate: ['120%', 0, -500],
+              },
+            }}
+            breakpoints={{
+              320: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+              },
+              480: {
+                slidesPerView: 3,
+                spaceBetween: 20,
+              },
+              768: {
+                slidesPerView: 4,
+                spaceBetween: 25,
+              },
+              1024: {
+                slidesPerView: 5,
+                spaceBetween: 30,
+              },
+              1280: {
+                slidesPerView: 6,
+                spaceBetween: 30,
+              }
+            }}
+            className="hamkorlar-swiper"
+          >
+            {hamkorlar.map((hamkor) => (
+              <SwiperSlide key={hamkor.id}>
+                <div className="partner-logo-wrapper">
+                  <img
+                    src={hamkor.logo}
+                    alt="Hamkor logosi"
+                    className="partner-logo"
+                    loading="lazy"
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
       </div>
 
       {/* Footer with Snow Accumulation */}
