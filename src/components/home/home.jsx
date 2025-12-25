@@ -16,6 +16,13 @@ import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 import 'swiper/css/grid';
 import Logo from '../imgs/logo.png';
+import Agent from '../imgs/agent.png'
+import Kelak from '../imgs/kelajal.png'
+import Fondi from '../imgs/fondi.png'
+import Uzbek from '../imgs/uzbekistan.png'
+import Kasb from '../imgs/kasb.png'
+import Digi from '../imgs/digi.png'
+import Aa from '../imgs/aa.svg'
 // import Day from '../imgs/day.png';
 
 // Agar yo'nalishlar uchun ikonkalar yo'q bo'lsa, standart ikonkalar yaratamiz
@@ -38,36 +45,36 @@ const HomePage = () => {
   const hamkorlar = [
     {
       id: 1,
-      logo: "http://online.raqamliavlod.uz:3455/assets/6-CiMIBnhI.png",
+      logo: Kasb,
     },
     {
       id: 2,
-      logo: "http://online.raqamliavlod.uz:3455/assets/1-DnfeDoqF.png",
+      logo: Agent,
     },
     {
       id: 3,
-      logo: "http://online.raqamliavlod.uz:3455/assets/3-Bs7eWGt2.png",
+      logo: Uzbek,
     },
     {
       id: 4,
-      logo: "http://online.raqamliavlod.uz:3455/assets/5-DQP9ezLm.png",
+      logo: Kelak,
     },
     {
       id: 5,
-      logo: "http://online.raqamliavlod.uz:3455/assets/4-COwvvxYE.svg",
+      logo: Fondi,
     },
     {
       id: 6,
-      logo: "http://online.raqamliavlod.uz:3455/assets/1-DnfeDoqF.png",
+      logo: Digi,
     },
     {
       id: 7,
-      logo: "http://online.raqamliavlod.uz:3455/assets/2-BWeCrlYe.png",
+      logo: Aa,
     },
-    {
-      id: 8,
-      logo: "http://online.raqamliavlod.uz:3455/assets/7-DjeyfpLS.png",
-    }
+    // {
+    //   id: 8,
+    //   logo: "http://online.raqamliavlod.uz:3455/assets/7-DjeyfpLS.png",
+    // }
   ];
 
 
