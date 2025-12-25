@@ -293,7 +293,7 @@ const HomePage = () => {
                     <div className="card-snow"></div>
                   </div>
                   <h3>{item.title}</h3>
-                  <p>{item.description}</p>
+                  {/* <p>{item.description}</p>  bu kerak emas ekan shu uchun ovordim */}
                   <button className="card-btn">
                     Hoziroq qo'shilish
                     <span className="btn-arrow">→</span>
