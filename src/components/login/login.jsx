@@ -736,7 +736,7 @@ const Login = () => {
             <form className='registration-form' onSubmit={handleSubmit}>
               {/* 1-ishtirokchi formasi */}
               <div className="participant-section">
-                <h3 className="participant-title">1-ishtirokchi (Siz)</h3>
+                {/* <h3 className="participant-title">1-ishtirokchi (Siz)</h3> */}
 
                 <div className='form-row'>
                   <div className='form-group'>
