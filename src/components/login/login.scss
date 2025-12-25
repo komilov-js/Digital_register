@@ -276,9 +276,16 @@ $snow-shadow: rgba(255, 255, 255, 0.9);
       }
       
       .category-details {
-        flex: 1;
+        // flex: 1;
+        h1{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
         
         h2 {
+          align-items: center;
+          display: flex;
           margin: 0 0 12px 0;
           font-size: 24px;
           font-weight: 700;
@@ -377,6 +384,8 @@ $snow-shadow: rgba(255, 255, 255, 0.9);
       
       h1 {
         color: $winter-primary;
+        display: flex;
+        align-items: center;
         margin-bottom: 12px;
         font-size: 28px;
         font-weight: 700;
@@ -385,7 +394,12 @@ $snow-shadow: rgba(255, 255, 255, 0.9);
         -webkit-text-fill-color: transparent;
         background-clip: text;
         position: relative;
-        
+        gap: 10px;
+        h1{
+          display: flex;
+          align-items: center;
+          margin: 0;
+        }
         &::before {
           content: '🔹';
           position: absolute;
@@ -1297,6 +1311,9 @@ $snow-shadow: rgba(255, 255, 255, 0.9);
           h2 {
             font-size: 20px;
           }
+          h1{
+            font-size: 20px;
+          }
           
           p {
             font-size: 13px;
@@ -1309,8 +1326,15 @@ $snow-shadow: rgba(255, 255, 255, 0.9);
       padding: 20px;
       
       .header-text {
+        display: flex;
+        align-items: center;
         h1 {
-          font-size: 22px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 !important;
+
+          font-size: 15px;
         }
         
         p {
