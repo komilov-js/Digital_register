@@ -365,10 +365,10 @@ const HomePage = () => {
           </section>
 
           {/* Floating CTA */}
-          <div className={`floating-cta ${isVisible ? 'float-up' : ''}`} onClick={refreshSnowflakes}>
+          {/* <div className={`floating-cta ${isVisible ? 'float-up' : ''}`} onClick={refreshSnowflakes}>
             <div className="cta-text">Qatnashishni boshlang!</div>
             <div className="pulse-ring"></div>
-          </div>
+          </div> */}
         </div>
       </main>
 
